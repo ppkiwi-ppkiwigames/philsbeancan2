@@ -19,16 +19,9 @@ const epoxyPath = dirname(
 
 const app = express();
 
-// Cross-origin settings
-app.use((req, res, next) => {
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "credentialless");
-  next();
-});
-
 // Allow the UV service worker to control the site
 app.use("/uv/sw.js", (req, res, next) => {
-  res.setHeader("Service-Worker-Allowed", "/");
+  res.setHeader("Service-Worker-Allowed", "/uv/");
   next();
 });
 
@@ -52,6 +45,6 @@ const server = createServer(app);
 const port = Number(process.env.PORT || 8080);
 
 server.listen(port, "0.0.0.0", () => {
-  console.log(`Math Time server running on port ${port}`);
+  console.log(`Math Time running on port ${port}`);
   console.log("Wisp transport: wss://wisp.mercurywork.shop/");
 });

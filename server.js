@@ -51,7 +51,7 @@ const server = createServer(app);
 
 const port = Number(process.env.PORT || 8080);
 
-server.listen(port, () => {
-  console.log(`Math Time running at http://localhost:${port}`);
+server.listen(port, "0.0.0.0", () => {
+  console.log(`Math Time server running on port ${port}`);
   console.log("Wisp transport: wss://wisp.mercurywork.shop/");
 });

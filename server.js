@@ -22,6 +22,7 @@ const app = express();
 // Allow the UV service worker to control the site
 app.use("/uv/sw.js", (req, res, next) => {
   res.setHeader("Service-Worker-Allowed", "/uv/");
+  res.setHeader("Cache-Control", "no-store");
   next();
 });
 

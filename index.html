@@ -159,17 +159,25 @@
           wisp: window.MATH_TIME_WISP
         }]);
 
-        if (!navigator.serviceWorker.controller) {
+        // The first registration does not control the current page until the
+        // next navigation. For the game iframe we only need the worker to be
+        // installed and active; the iframe navigation itself is under the
+        // /uv/service/ scope and will be controlled by this worker.
+        if (registration.installing) {
           await new Promise((resolve) => {
+            const worker = registration.installing;
             const done = () => {
-              navigator.serviceWorker.removeEventListener("controllerchange", done);
-              resolve();
+              if (worker.state === "installed" || worker.state === "activated") {
+                worker.removeEventListener("statechange", done);
+                resolve();
+              }
             };
-            navigator.serviceWorker.addEventListener("controllerchange", done, { once: true });
-            setTimeout(resolve, 2000);
+            worker.addEventListener("statechange", done);
+            done();
           });
         }
-
+        if (registration.waiting) await registration.waiting.postMessage({type: "SKIP_WAITING"});
+        await navigator.serviceWorker.ready;
         return true;
       })().catch((err) => {
         console.error("Wisp/Ultraviolet setup failed:", err);

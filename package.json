@@ -1,0 +1,14 @@
+{
+  "name": "math-time-wisp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"start": "node server.js"},
+  "dependencies": {
+    "@mercuryworkshop/bare-mux": "^2.1.9",
+    "@mercuryworkshop/epoxy-transport": "^3.0.1",
+    "@titaniumnetwork-dev/ultraviolet": "^3.2.6",
+    "express": "^4.21.2",
+    "ultraviolet-static": "^1.0.2"
+  }
+}
